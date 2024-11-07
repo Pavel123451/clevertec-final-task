@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001_create_tables
+      author: pavel
+      changes:
+        - sqlFile:
+            path: sql/001_create_tables.sql
+            relativeToChangelogFile: true
+
+  - changeSet:
+      id: 002_insert_data
+      author: pavel
+      changes:
+        - sqlFile:
+            path: sql/002_insert_data.sql
+            relativeToChangelogFile: true
+
