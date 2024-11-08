@@ -9,6 +9,7 @@ import ru.clevertec.api.dto.request.CommentCreateDto;
 import ru.clevertec.api.dto.request.CommentPartialUpdateDto;
 import ru.clevertec.api.dto.response.CommentResponseDto;
 import ru.clevertec.api.dto.response.PageResultDto;
+import ru.clevertec.core.cache.Cache;
 import ru.clevertec.core.exception.CommentNotFoundException;
 import ru.clevertec.core.exception.NewsNotFoundException;
 import ru.clevertec.core.mapper.CommentMapper;
@@ -22,10 +23,13 @@ import ru.clevertec.core.repository.NewsRepository;
 public class CommentService {
 
     private final CommentRepository commentRepository;
-    private final CommentMapper commentMapper;
     private final NewsRepository newsRepository;
+    private final CommentMapper commentMapper;
+    private final Cache<Long, Comment> cache;
 
-    public CommentResponseDto createComment(Long newsId, CommentCreateDto commentCreateDto) {
+    public CommentResponseDto createComment(Long newsId,
+                                            CommentCreateDto commentCreateDto
+    ) {
         News news = newsRepository.findById(newsId)
                 .orElseThrow(() -> new NewsNotFoundException("News with id " + newsId + " not found"));
 
@@ -33,27 +37,32 @@ public class CommentService {
         comment.setNews(news);
 
         Comment savedComment = commentRepository.save(comment);
+        cache.put(savedComment.getId(), savedComment);
+
         return commentMapper.toCommentResponseDto(savedComment);
     }
 
     public CommentResponseDto getComment(Long newsId, Long commentId) {
-        Comment comment = commentRepository.findByNewsIdAndId(newsId, commentId)
-                .orElseThrow(() -> new CommentNotFoundException(
-                        "News with id " + newsId + " has no comment with id " + commentId));
+        Comment comment = cache.get(commentId);
+        if (comment == null) {
+            comment = commentRepository.findByNewsIdAndId(newsId, commentId)
+                    .orElseThrow(() -> new CommentNotFoundException(
+                            "News with id " + newsId + " has no comment with id " + commentId));
+            cache.put(commentId, comment);
+        }
 
         return commentMapper.toCommentResponseDto(comment);
     }
 
-    public CommentResponseDto updateComment(Long newsId,
-                                            Long commentId,
+    public CommentResponseDto updateComment(Long newsId, Long commentId,
                                             CommentCreateDto commentCreateDto
     ) {
-        Comment comment = commentRepository.findByNewsIdAndId(newsId, commentId)
-                .orElseThrow(() -> new CommentNotFoundException(
-                        "News with id " + newsId + " has no comment with id " + commentId));
+        Comment comment = getCommentFromCacheOrRepository(newsId, commentId);
 
         commentMapper.updateComment(commentCreateDto, comment);
         Comment updatedComment = commentRepository.save(comment);
+        cache.put(commentId, updatedComment);
+
         return commentMapper.toCommentResponseDto(updatedComment);
     }
 
@@ -61,9 +70,7 @@ public class CommentService {
                                                    Long commentId,
                                                    CommentPartialUpdateDto commentPartialUpdateDto
     ) {
-        Comment comment = commentRepository.findByNewsIdAndId(newsId, commentId)
-                .orElseThrow(() -> new CommentNotFoundException(
-                        "News with id " + newsId + " has no comment with id " + commentId));
+        Comment comment = getCommentFromCacheOrRepository(newsId, commentId);
 
         commentMapper.partialUpdateComment(commentPartialUpdateDto, comment);
         Comment updatedComment = commentRepository.save(comment);
@@ -76,6 +83,8 @@ public class CommentService {
                         "News with id " + newsId + " has no comment with id " + commentId));
 
         commentRepository.delete(comment);
+        cache.delete(commentId);
+
         return "Comment with ID " + commentId + " has been deleted.";
     }
 
@@ -83,13 +92,26 @@ public class CommentService {
                                                             String text,
                                                             int page, int size
     ) {
-        if(!newsRepository.existsById(newsId)) {
+        if (!newsRepository.existsById(newsId)) {
             throw new NewsNotFoundException("News with id " + newsId + " not found");
         }
+
         Pageable pageable = PageRequest.of(page, size);
         Page<Comment> commentPage = commentRepository
                 .findByTextContainsIgnoreCaseAndNewsId(text, pageable, newsId);
+
         return new PageResultDto<>(commentPage.map(commentMapper::toCommentResponseDto));
     }
+
+    private Comment getCommentFromCacheOrRepository(Long newsId, Long commentId) {
+        Comment comment = cache.get(commentId);
+        if (comment == null) {
+            comment = commentRepository.findByNewsIdAndId(newsId, commentId)
+                    .orElseThrow(() -> new CommentNotFoundException(
+                            "News with id " + newsId + " has no comment with id " + commentId));
+        }
+        return comment;
+    }
 }
+
 

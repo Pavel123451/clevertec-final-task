@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: core
+  datasource:
+    url: jdbc:postgresql://localhost:5432/news
+    username: root
+    password: root
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+cache:
+  algorithm: LFU
+  size: 150

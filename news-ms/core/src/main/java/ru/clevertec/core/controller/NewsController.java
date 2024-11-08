@@ -22,7 +22,7 @@ public class NewsController implements NewsApi {
 
     @Override
     public PageResultDto<NewsResponseDto> getNews(int page, int size) {
-        return newsService.getNews(page, size);
+        return newsService.getNewsPage(page, size);
     }
 
     @Override
