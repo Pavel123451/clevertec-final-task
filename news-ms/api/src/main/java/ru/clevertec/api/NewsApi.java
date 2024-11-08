@@ -21,7 +21,7 @@ public interface NewsApi {
     PageResultDto<NewsResponseDto> getNews(@RequestParam(defaultValue = "0") int page,
                                            @RequestParam(defaultValue = "10") int size);
 
-    @GetMapping("/{newsId}")
+    @GetMapping("/{newsId}/comments")
     NewsWithCommentsResponseDto getNewsWithComments(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,

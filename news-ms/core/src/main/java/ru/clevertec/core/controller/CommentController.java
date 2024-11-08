@@ -17,34 +17,43 @@ public class CommentController implements CommentApi {
 
     @Override
     public CommentResponseDto createComment(Long newsId,
-                                            CommentCreateDto commentCreateDto) {
+                                            CommentCreateDto commentCreateDto
+    ) {
         return commentService.createComment(newsId, commentCreateDto);
     }
 
     @Override
-    public CommentResponseDto getComment(Long commentId) {
-        return commentService.getComment(commentId);
+    public CommentResponseDto getComment(Long newsId, Long commentId) {
+        return commentService.getComment(newsId, commentId);
     }
 
     @Override
-    public CommentResponseDto updateComment(Long commentId,
-                                            CommentCreateDto commentCreateDto) {
-        return commentService.updateComment(commentId, commentCreateDto);
+    public CommentResponseDto updateComment(Long newsId,
+                                            Long commentId,
+                                            CommentCreateDto commentCreateDto
+    ) {
+        return commentService.updateComment(newsId, commentId, commentCreateDto);
     }
 
     @Override
-    public CommentResponseDto partialUpdateComment(Long commentId,
-                                                   CommentPartialUpdateDto commentPartialUpdateDto) {
-        return commentService.partialUpdateComment(commentId, commentPartialUpdateDto);
+    public CommentResponseDto partialUpdateComment(Long newsId,
+                                                   Long commentId,
+                                                   CommentPartialUpdateDto commentPartialUpdateDto
+    ) {
+        return commentService.partialUpdateComment(newsId, commentId, commentPartialUpdateDto);
     }
 
     @Override
-    public String deleteComment(Long commentId) {
-        return commentService.deleteComment(commentId);
+    public String deleteComment(Long newsId, Long commentId) {
+        return commentService.deleteComment(newsId, commentId);
     }
 
     @Override
-    public PageResultDto<CommentResponseDto> searchComments(String text, int page, int size) {
-        return commentService.searchComments(text, page, size);
+    public PageResultDto<CommentResponseDto> searchComments(Long newsId,
+                                                            String text,
+                                                            int page,
+                                                            int size
+    ) {
+        return commentService.searchComments(newsId, text, page, size);
     }
 }

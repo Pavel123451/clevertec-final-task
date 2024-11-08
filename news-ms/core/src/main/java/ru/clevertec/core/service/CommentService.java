@@ -36,49 +36,59 @@ public class CommentService {
         return commentMapper.toCommentResponseDto(savedComment);
     }
 
-    public CommentResponseDto getComment(Long commentId) {
-        Comment comment = commentRepository.findById(commentId)
+    public CommentResponseDto getComment(Long newsId, Long commentId) {
+        Comment comment = commentRepository.findByNewsIdAndId(newsId, commentId)
                 .orElseThrow(() -> new CommentNotFoundException(
-                        "Comment with id " + commentId + " not found"));
+                        "News with id " + newsId + " has no comment with id " + commentId));
 
         return commentMapper.toCommentResponseDto(comment);
     }
 
-    public CommentResponseDto updateComment(Long commentId, CommentCreateDto commentCreateDto) {
-        Comment comment = commentRepository.findById(commentId)
+    public CommentResponseDto updateComment(Long newsId,
+                                            Long commentId,
+                                            CommentCreateDto commentCreateDto
+    ) {
+        Comment comment = commentRepository.findByNewsIdAndId(newsId, commentId)
                 .orElseThrow(() -> new CommentNotFoundException(
-                        "Comment with id " + commentId + " not found"));
+                        "News with id " + newsId + " has no comment with id " + commentId));
 
         commentMapper.updateComment(commentCreateDto, comment);
         Comment updatedComment = commentRepository.save(comment);
         return commentMapper.toCommentResponseDto(updatedComment);
     }
 
-    public CommentResponseDto partialUpdateComment(Long commentId,
-                                                   CommentPartialUpdateDto commentPartialUpdateDto) {
-        Comment comment = commentRepository.findById(commentId)
+    public CommentResponseDto partialUpdateComment(Long newsId,
+                                                   Long commentId,
+                                                   CommentPartialUpdateDto commentPartialUpdateDto
+    ) {
+        Comment comment = commentRepository.findByNewsIdAndId(newsId, commentId)
                 .orElseThrow(() -> new CommentNotFoundException(
-                        "Comment with id " + commentId + " not found"));
+                        "News with id " + newsId + " has no comment with id " + commentId));
 
         commentMapper.partialUpdateComment(commentPartialUpdateDto, comment);
         Comment updatedComment = commentRepository.save(comment);
         return commentMapper.toCommentResponseDto(updatedComment);
     }
 
-    public String deleteComment(Long commentId) {
-        Comment comment = commentRepository.findById(commentId)
+    public String deleteComment(Long newsId, Long commentId) {
+        Comment comment = commentRepository.findByNewsIdAndId(newsId, commentId)
                 .orElseThrow(() -> new CommentNotFoundException(
-                        "Comment with id " + commentId + " not found"));
+                        "News with id " + newsId + " has no comment with id " + commentId));
 
         commentRepository.delete(comment);
         return "Comment with ID " + commentId + " has been deleted.";
     }
 
-    public PageResultDto<CommentResponseDto> searchComments(String text,
-                                                            int page, int size) {
+    public PageResultDto<CommentResponseDto> searchComments(Long newsId,
+                                                            String text,
+                                                            int page, int size
+    ) {
+        if(!newsRepository.existsById(newsId)) {
+            throw new NewsNotFoundException("News with id " + newsId + " not found");
+        }
         Pageable pageable = PageRequest.of(page, size);
         Page<Comment> commentPage = commentRepository
-                .findByTextContainsIgnoreCase(text, pageable);
+                .findByTextContainsIgnoreCaseAndNewsId(text, pageable, newsId);
         return new PageResultDto<>(commentPage.map(commentMapper::toCommentResponseDto));
     }
 }
