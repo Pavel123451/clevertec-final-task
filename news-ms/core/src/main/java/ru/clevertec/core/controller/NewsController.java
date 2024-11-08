@@ -26,8 +26,9 @@ public class NewsController implements NewsApi {
     }
 
     @Override
-    public NewsWithCommentsResponseDto getNewsWithComments(int page,
-                                                           int size, Long newsId) {
+    public NewsWithCommentsResponseDto getNewsWithComments(Long newsId,
+                                                           int page,
+                                                           int size) {
         return newsService.getNewsWithComments(page, size, newsId);
     }
 
