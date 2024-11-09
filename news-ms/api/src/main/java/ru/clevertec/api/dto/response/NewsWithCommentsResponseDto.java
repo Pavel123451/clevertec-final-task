@@ -2,7 +2,6 @@ package ru.clevertec.api.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import org.springframework.data.domain.Page;
 
 import java.time.ZonedDateTime;
 

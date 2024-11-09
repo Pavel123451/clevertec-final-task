@@ -1,0 +1,4 @@
+DELETE FROM comment;
+ALTER SEQUENCE comment_id_seq RESTART WITH 1;
+DELETE FROM news;
+ALTER SEQUENCE news_id_seq RESTART WITH 1;
