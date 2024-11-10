@@ -1,8 +1,5 @@
 # News Management System - API Endpoints
 
-## Documentation
-- Swagger documentation is available at: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
-
 ## API Endpoints
 
 ### News Endpoints
@@ -21,3 +18,6 @@
 - **PATCH /api/news/{newsId}/comments/{commentId}** — Partially update a comment
 - **DELETE /api/news/{newsId}/comments/{commentId}** — Delete a comment
 - **GET /api/news/{newsId}/comments/search** — Search comments by text for a specific news article
+
+## Documentation
+- Swagger documentation is available at: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
