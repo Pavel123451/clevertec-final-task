@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class LFUCache<K, V> implements Cache<K, V> {
     private final int maxSize;
     private final Map<K, V> cache = new HashMap<>();

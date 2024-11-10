@@ -5,7 +5,6 @@ import ru.clevertec.core.cache.Cache;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-
 public class LRUCache<K, V> implements Cache<K, V> {
     private final int capacity;
     private final Map<K, V> cache;

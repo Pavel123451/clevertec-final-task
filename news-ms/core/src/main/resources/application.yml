@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: core
+  profiles:
+    active:
+      - dev
+      - redis
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    generate-ddl: true
+    show-sql: true
+cache:
+  algorithm: LRU
+  size: 150

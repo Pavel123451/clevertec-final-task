@@ -1,5 +1,7 @@
 package ru.clevertec.core.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
@@ -10,6 +12,7 @@ import java.util.List;
 @Entity
 @Table(name = "news")
 @Data
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "@class")
 public class News {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +28,7 @@ public class News {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String text;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "news", cascade = CascadeType.ALL)
     private List<Comment> comments;
 }
