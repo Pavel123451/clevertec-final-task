@@ -5,14 +5,17 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.clevertec.api.dto.response.CommentResponseDto;
 import ru.clevertec.api.dto.response.PageResultDto;
 import ru.clevertec.core.service.CommentService;
+import ru.clevertec.exceptionhandlestarter.config.ExceptionHandlerAutoConfiguration;
 import ru.clevertec.exceptionhandlestarter.exception.CommentNotFoundException;
 
 import java.util.List;
@@ -23,6 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static ru.clevertec.core.data.CommentTestData.*;
 
 @WebMvcTest(CommentController.class)
+@Import(ExceptionHandlerAutoConfiguration.class)
 public class CommentControllerTest {
 
     @Autowired

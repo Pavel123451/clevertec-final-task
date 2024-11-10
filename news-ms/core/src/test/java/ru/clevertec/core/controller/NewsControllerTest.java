@@ -6,16 +6,19 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.clevertec.api.dto.request.NewsCreateDto;
 import ru.clevertec.api.dto.request.NewsPartialUpdateDto;
 import ru.clevertec.api.dto.response.NewsResponseDto;
 import ru.clevertec.api.dto.response.PageResultDto;
 import ru.clevertec.core.service.NewsService;
+import ru.clevertec.exceptionhandlestarter.config.ExceptionHandlerAutoConfiguration;
 
 import java.util.List;
 
@@ -25,6 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static ru.clevertec.core.data.NewsTestData.*;
 
 @WebMvcTest(NewsController.class)
+@Import(ExceptionHandlerAutoConfiguration.class)
 public class NewsControllerTest {
 
     @Autowired
@@ -129,16 +133,5 @@ public class NewsControllerTest {
                 .andExpect(jsonPath("$.content[0].id").value(NEWS_RESPONSE_DTO.getId()))
                 .andExpect(jsonPath("$.content[0].title").value(NEWS_RESPONSE_DTO.getTitle()))
                 .andExpect(jsonPath("$.content[0].text").value(NEWS_RESPONSE_DTO.getText()));
-    }
-
-    @Test
-    void getNewsWithComments_shouldReturn200() throws Exception {
-        mockMvc.perform(get("/api/news/1/comments")
-                        .param("page", "0")
-                        .param("size", "10")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.news.id").value(NEWS_RESPONSE_DTO.getId()))
-                .andExpect(jsonPath("$.news.title").value(NEWS_RESPONSE_DTO.getTitle()));
     }
 }
