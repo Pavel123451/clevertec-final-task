@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import ru.clevertec.exceptionhandlestarter.exception.CommentNotFoundException;
 import ru.clevertec.exceptionhandlestarter.exception.NewsNotFoundException;
-import ru.clevertec.exceptionhandlestarter.response.ValidationErrorResponse;
-import ru.clevertec.exceptionhandlestarter.response.Violation;
+import ru.clevertec.exceptionhandlestarter.advice.response.ValidationErrorResponse;
+import ru.clevertec.exceptionhandlestarter.advice.response.Violation;
 
 import java.util.List;
 

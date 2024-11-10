@@ -29,9 +29,8 @@ public class Comment {
     private String username;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "news_id", nullable = false)
-    @JsonIgnoreProperties("comments")
     private News news;
 }
 
