@@ -12,8 +12,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.clevertec.api.dto.response.CommentResponseDto;
 import ru.clevertec.api.dto.response.PageResultDto;
-import ru.clevertec.core.exception.CommentNotFoundException;
 import ru.clevertec.core.service.CommentService;
+import ru.clevertec.exceptionhandlestarter.exception.CommentNotFoundException;
 
 import java.util.List;
 

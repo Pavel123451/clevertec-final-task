@@ -1,4 +1,4 @@
-package ru.clevertec.core.exception.response;
+package ru.clevertec.exceptionhandlestarter.response;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

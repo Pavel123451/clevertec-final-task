@@ -1,4 +1,4 @@
-package ru.clevertec.core.exception.advice;
+package ru.clevertec.exceptionhandlestarter.advice;
 
 
 import org.springframework.http.HttpStatus;
@@ -6,10 +6,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import ru.clevertec.core.exception.CommentNotFoundException;
-import ru.clevertec.core.exception.NewsNotFoundException;
-import ru.clevertec.core.exception.response.ValidationErrorResponse;
-import ru.clevertec.core.exception.response.Violation;
+import ru.clevertec.exceptionhandlestarter.exception.CommentNotFoundException;
+import ru.clevertec.exceptionhandlestarter.exception.NewsNotFoundException;
+import ru.clevertec.exceptionhandlestarter.response.ValidationErrorResponse;
+import ru.clevertec.exceptionhandlestarter.response.Violation;
 
 import java.util.List;
 

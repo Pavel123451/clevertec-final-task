@@ -15,13 +15,13 @@ import ru.clevertec.api.dto.request.CommentPartialUpdateDto;
 import ru.clevertec.api.dto.response.CommentResponseDto;
 import ru.clevertec.api.dto.response.PageResultDto;
 import ru.clevertec.core.cache.Cache;
-import ru.clevertec.core.exception.CommentNotFoundException;
-import ru.clevertec.core.exception.NewsNotFoundException;
 import ru.clevertec.core.mapper.CommentMapper;
 import ru.clevertec.core.model.Comment;
 import ru.clevertec.core.model.News;
 import ru.clevertec.core.repository.CommentRepository;
 import ru.clevertec.core.repository.NewsRepository;
+import ru.clevertec.exceptionhandlestarter.exception.CommentNotFoundException;
+import ru.clevertec.exceptionhandlestarter.exception.NewsNotFoundException;
 
 import java.util.List;
 import java.util.Optional;

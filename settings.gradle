@@ -1,2 +1,4 @@
 rootProject.name = 'clevertecF-news-managment-system'
-//include 'news-ms'
+include 'news-ms'
+include 'logging-starter'
+include 'exception-handle-starter'

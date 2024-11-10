@@ -1,4 +1,4 @@
-package ru.clevertec.core.exception;
+package ru.clevertec.exceptionhandlestarter.exception;
 
 public class CommentNotFoundException extends RuntimeException {
     public CommentNotFoundException(String message) {

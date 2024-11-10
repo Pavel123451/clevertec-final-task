@@ -1,4 +1,4 @@
-package ru.clevertec.core.logging;
+package ru.clevertec.loggingstarter.aspect;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.annotation.Aspect;

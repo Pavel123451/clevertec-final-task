@@ -20,6 +20,7 @@ configurations {
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
@@ -32,6 +33,8 @@ dependencies {
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.18.1'
 
     implementation project(':api')
+    implementation 'ru.clevertec:logging-starter:0.0.1'
+    implementation 'ru.clevertec:exception-handle-starter:0.0.1'
 
     compileOnly 'org.mapstruct:mapstruct:1.6.2'
     compileOnly 'org.projectlombok:lombok'
